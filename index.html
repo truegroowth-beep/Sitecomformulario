@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>True Growth | PRV™️ — Processo, Resultado e Vendas</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── FORMULÁRIO ── */
+    .form-section {
+      padding: 110px 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg-surface);
+      position: relative;
+    }
+    .form-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(45,255,170,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .form-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .form-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+    }
+    .form-box .section-tag { margin-bottom: 12px; }
+    .form-title {
+      font-family: var(--fonte-display);
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--txt);
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .form-subtitle {
+      font-size: 14px;
+      color: var(--txt-muted);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .form-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--txt-mid);
+    }
+    .form-input {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--txt);
+      font-family: var(--fonte-corpo);
+      font-size: 15px;
+      padding: 14px 18px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--verde-mid);
+      box-shadow: 0 0 0 3px rgba(45,255,170,0.08);
+    }
+    .form-input::placeholder { color: var(--txt-muted); }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .radio-option:hover {
+      border-color: var(--border-mid);
+      background: var(--bg-card-alt);
+    }
+    .radio-option input[type="radio"] {
+      accent-color: var(--verde);
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .radio-option input[type="radio"]:checked + span {
+      color: var(--verde);
+      font-weight: 600;
+    }
+    .radio-option:has(input:checked) {
+      border-color: var(--border-hot);
+      background: rgba(45,255,170,0.04);
+    }
+    .radio-option span { font-size: 14px; color: var(--txt-mid); }
+    .form-submit {
+      width: 100%;
+      margin-top: 12px;
+      height: 56px;
+      font-size: 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: none;
+      background: var(--verde);
+      color: #020c07;
+      font-family: var(--fonte-corpo);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(45,255,170,0.35);
+    }
+    .form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .form-success.show { display: block; }
+    .form-success-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .form-success h3 {
+      font-family: var(--fonte-display);
+      font-size: 32px;
+      color: var(--verde);
+      margin-bottom: 12px;
+    }
+    .form-success p {
+      font-size: 15px;
+      color: var(--txt-muted);
+      line-height: 1.7;
+    }
+    .form-error-msg {
+      background: rgba(255,74,74,0.08);
+      border: 1px solid rgba(255,74,74,0.25);
+      border-radius: var(--radius-md);
+      color: #ff6b6b;
+      font-size: 13px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      display: none;
+    }
+    .form-error-msg.show { display: block; }
+
+    /* ── SELECT BAR (dropdown) ── */
+    .select-bar {
+      position: relative;
+    }
+    .select-bar-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--txt-muted);
+      font-family: var(--fonte-corpo);
+      font-size: 15px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
+      text-align: left;
+    }
+    .select-bar-trigger:hover {
+      border-color: var(--border-mid);
+    }
+    .select-bar.open .select-bar-trigger {
+      border-color: var(--verde-mid);
+      box-shadow: 0 0 0 3px rgba(45,255,170,0.08);
+      color: var(--txt);
+    }
+    .select-bar.selected .select-bar-trigger {
+      border-color: var(--verde);
+      color: var(--verde);
+      font-weight: 600;
+    }
+    .select-bar-label { flex: 1; }
+    .select-bar-arrow {
+      flex-shrink: 0;
+      color: var(--txt-muted);
+      transition: transform 0.25s, color 0.2s;
+    }
+    .select-bar.open .select-bar-arrow {
+      transform: rotate(180deg);
+      color: var(--verde);
+    }
+    .select-bar.selected .select-bar-arrow { color: var(--verde); }
+    .select-bar-options {
+      display: none;
+      flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+    .select-bar.open .select-bar-options { display: flex; }
+    .select-bar-item {
+      background: none;
+      border: none;
+      border-top: 1px solid var(--border);
+      color: var(--txt-mid);
+      font-family: var(--fonte-corpo);
+      font-size: 14px;
+      padding: 13px 18px;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, padding-left 0.15s;
+    }
+    .select-bar-item:first-child { border-top: none; }
+    .select-bar-item:hover {
+      background: rgba(45,255,170,0.06);
+      color: var(--verde);
+      padding-left: 24px;
+    }
+    .select-bar-item.active {
+      background: rgba(45,255,170,0.08);
+      color: var(--verde);
+      font-weight: 700;
+    }
+
+    /* ── HERO ICONE 3D ── */
+    .hero-visual-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .hero-visual-icon .icone-3d-wrap {
+      width: 100%;
+      max-width: 460px;
+    }
+    .hero-icone3d {
+      animation: float 5s ease-in-out infinite;
+    }
+    .faq-section {
+      padding: 110px 0;
+      border-top: 1px solid var(--border);
+    }
+    .faq-list {
+      max-width: 740px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: var(--border-mid); }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--txt);
+      font-family: var(--fonte-corpo);
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
+      padding: 22px 26px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-q-icon {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--border-mid);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--verde);
+      font-size: 18px;
+      font-weight: 300;
+      transition: transform 0.25s;
+    }
+    .faq-item.open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.25s;
+      padding: 0 26px;
+      font-size: 14px;
+      color: var(--txt-muted);
+      line-height: 1.75;
+    }
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-bottom: 22px;
+    }
+
+    /* spinner */
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid rgba(2,12,7,0.3);
+      border-top-color: #020c07;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .form-submit.loading .spinner { display: block; }
+    .form-submit.loading .btn-label { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .secao-3d-inner--textonly {
+      grid-template-columns: 1fr;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .form-box { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <img src="logo.png" alt="True Growth" class="logo-img" />
+      <ul class="nav-links">
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#processo">Método</a></li>
+        <li><a href="#resultados">Resultados</a></li>
+        <li><a href="#contato" class="nav-cta">
+          <span>Diagnóstico gratuito</span>
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-text">PRV</div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Método exclusivo para operações que faturam 100k+/mês
+      </div>
+      <h1 class="hero-title">
+        Crescimento previsível<br/>
+        não é sorte.<br/>
+        É <em>PRV™️</em>
+      </h1>
+      <p class="hero-sub">
+        O PRV™️ da True Growth transforma sua operação em uma máquina de vendas escalável, replicável e sem improvisos — para empresas que faturam 100k/mês ou mais e querem resultados reais.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5574988010822" target="_blank" rel="noopener" class="btn-primary">
+          <span>Quero escalar minha operação AGORA</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://wa.me/5574988010822" target="_blank" rel="noopener" class="btn-ghost">
+          <span>Ver como funciona</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">+340%</span>
+          <span class="stat-label">ROI médio em tráfego</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">+120</span>
+          <span class="stat-label">Operações escaladas</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">100k+</span>
+          <span class="stat-label">Faturamento mínimo atendido</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual hero-visual-icon">
+      <div class="icone-3d-wrap">
+        <svg class="raio-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="glow-h"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glow-strong-h"><feGaussianBlur stdDeviation="8" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="grad-raio-h" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3ddba0" stop-opacity="0"/><stop offset="40%" stop-color="#3ddba0" stop-opacity="1"/><stop offset="60%" stop-color="#7fffda" stop-opacity="1"/><stop offset="100%" stop-color="#3ddba0" stop-opacity="0"/></linearGradient>
+          </defs>
+          <circle cx="250" cy="250" r="220" fill="none" stroke="#3ddba0" stroke-width="0.5" stroke-opacity="0.15"/>
+          <circle cx="250" cy="250" r="210" fill="none" stroke="url(#grad-raio-h)" stroke-width="2.5" stroke-dasharray="120 1200" filter="url(#glow-h)" class="raio-principal"/>
+          <circle cx="250" cy="250" r="210" fill="none" stroke="#3ddba0" stroke-width="1" stroke-dasharray="60 1200" stroke-opacity="0.4" class="raio-sec"/>
+          <circle class="hp1" r="3" fill="#3ddba0" filter="url(#glow-h)"/>
+          <circle class="hp2" r="2" fill="#7fffda" filter="url(#glow-h)"/>
+          <circle class="hp3" r="1.5" fill="#3ddba0" filter="url(#glow-h)"/>
+        </svg>
+        <div class="icone-3d-img-wrap">
+          <img src="icone3d.png" alt="True Growth PRV" class="icone-3d-img hero-icone3d"/>
+        </div>
+        <div class="icone-reflexo"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO DIAGNÓSTICO -->
+  <section class="form-section" id="diagnostico">
+    <div class="form-wrap">
+      <div class="form-box">
+        <p class="section-tag">Diagnóstico rápido</p>
+        <h2 class="form-title">Descubra se sua empresa está pronta para escalar com o PRV™️</h2>
+        <p class="form-subtitle">Leva 1 minuto. Responda abaixo e receba sua análise gratuita.</p>
+
+        <div id="form-fields">
+          <div class="form-group">
+            <label class="form-label" for="nome">Nome completo</label>
+            <input class="form-input" type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="nicho">Qual o nicho da sua empresa?</label>
+            <input class="form-input" type="text" id="nicho" name="nicho" placeholder="Ex: clínica, imóveis, SaaS..."/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="whatsapp">WhatsApp</label>
+            <input class="form-input" type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" autocomplete="tel"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Quantos funcionários sua empresa possui?</label>
+            <div class="select-bar" data-name="funcionarios">
+              <button type="button" class="select-bar-trigger">
+                <span class="select-bar-label">Selecione uma opção</span>
+                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="select-bar-options">
+                <button type="button" class="select-bar-item" data-value="1 a 3">1 a 3</button>
+                <button type="button" class="select-bar-item" data-value="4 a 10">4 a 10</button>
+                <button type="button" class="select-bar-item" data-value="11 a 30">11 a 30</button>
+                <button type="button" class="select-bar-item" data-value="30+">30+</button>
+              </div>
+              <input type="hidden" name="funcionarios" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Hoje, como funciona seu comercial?</label>
+            <div class="select-bar" data-name="comercial">
+              <button type="button" class="select-bar-trigger">
+                <span class="select-bar-label">Selecione uma opção</span>
+                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="select-bar-options">
+                <button type="button" class="select-bar-item" data-value="Não tenho time comercial">Não tenho time comercial</button>
+                <button type="button" class="select-bar-item" data-value="1 atendente">1 atendente</button>
+                <button type="button" class="select-bar-item" data-value="Time com até 4 pessoas">Time com até 4 pessoas</button>
+                <button type="button" class="select-bar-item" data-value="Time com 10 ou mais">Time com 10 ou mais</button>
+              </div>
+              <input type="hidden" name="comercial" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Qual seu faturamento mensal atual?</label>
+            <div class="select-bar" data-name="faturamento">
+              <button type="button" class="select-bar-trigger">
+                <span class="select-bar-label">Selecione uma opção</span>
+                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="select-bar-options">
+                <button type="button" class="select-bar-item" data-value="50 mil a 100 mil">50 mil a 100 mil</button>
+                <button type="button" class="select-bar-item" data-value="100 mil a 500 mil">100 mil a 500 mil</button>
+                <button type="button" class="select-bar-item" data-value="500 mil a 1 milhão">500 mil a 1 milhão</button>
+                <button type="button" class="select-bar-item" data-value="1 milhão+">1 milhão+</button>
+              </div>
+              <input type="hidden" name="faturamento" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Onde você sente que mais perde dinheiro hoje?</label>
+            <div class="select-bar" data-name="dor">
+              <button type="button" class="select-bar-trigger">
+                <span class="select-bar-label">Selecione uma opção</span>
+                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="select-bar-options">
+                <button type="button" class="select-bar-item" data-value="Falta de processo">Falta de processo</button>
+                <button type="button" class="select-bar-item" data-value="Falta de follow-up">Falta de follow-up</button>
+                <button type="button" class="select-bar-item" data-value="Leads desqualificados">Leads desqualificados</button>
+                <button type="button" class="select-bar-item" data-value="Baixa conversão">Baixa conversão</button>
+                <button type="button" class="select-bar-item" data-value="Não sei exatamente">Não sei exatamente</button>
+              </div>
+              <input type="hidden" name="dor" />
+            </div>
+          </div>
+
+          <button class="form-submit btn-primary" id="btn-submit" type="button">
+            <span class="spinner"></span>
+            <span class="btn-label">👉 Quero meu diagnóstico agora</span>
+          </button>
+          <div class="form-error-msg" id="form-error"></div>
+        </div>
+
+        <div class="form-success" id="form-success">
+          <span class="form-success-icon">✅</span>
+          <h3>Diagnóstico enviado!</h3>
+          <p>Recebemos suas respostas. Nossa equipe vai analisar sua operação e entrar em contato pelo WhatsApp em breve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMA -->
+  <section class="problema">
+    <div class="container">
+      <p class="section-tag">A dor que ninguém fala</p>
+      <h2 class="section-title">Leads entram e saem<br/>sem acompanhamento —<br/><em>dinheiro jogado fora.</em></h2>
+      <div class="problema-grid">
+        <div class="problema-item">
+          <span class="problema-x">✕</span>
+          <div>
+            <p class="problema-titulo">Dinheiro queimando no improviso</p>
+            <p>Seu time improvisa e depende de sorte para bater metas. Sem processo, sem previsibilidade.</p>
+          </div>
+        </div>
+        <div class="problema-item">
+          <span class="problema-x">✕</span>
+          <div>
+            <p class="problema-titulo">Oportunidades perdidas todo dia</p>
+            <p>Cada ligação, reunião ou oportunidade perdida é dinheiro que você nunca mais verá.</p>
+          </div>
+        </div>
+        <div class="problema-item">
+          <span class="problema-x">✕</span>
+          <div>
+            <p class="problema-titulo">Follow-up que não acontece</p>
+            <p>Leads entram e saem sem acompanhamento. Receita evaporando por falta de processo.</p>
+          </div>
+        </div>
+        <div class="problema-item">
+          <span class="problema-x">✕</span>
+          <div>
+            <p class="problema-titulo">Crescimento instintivo não escala</p>
+            <p>Crescimento previsível paga contas e salários. Se sua operação não vende sozinha, quanto você está perdendo?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 3D -->
+  <section class="secao-3d">
+    <div class="secao-3d-inner secao-3d-inner--textonly">
+      <div class="secao-3d-texto">
+        <p class="section-tag">O que é PRV™️</p>
+        <h2 class="section-title">Processo, Resultado<br/>e <em>Vendas</em> —<br/>sem improviso.</h2>
+        <p class="secao-3d-desc">O PRV™️ é o método da True Growth que transforma operações comuns em máquinas de vendas previsíveis, escaláveis e replicáveis. <strong>Tudo é medido e registrado</strong> — nada escapa do controle.</p>
+        <div class="secao-3d-pills">
+          <span class="pill">Processo</span>
+          <span class="pill">Resultado</span>
+          <span class="pill">Vendas</span>
+          <span class="pill">Cultura forte</span>
+        </div>
+        <a href="https://wa.me/5574988010822" target="_blank" rel="noopener" class="btn-primary">
+          <span>Quero esse resultado</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="servicos" id="servicos">
+    <div class="container">
+      <p class="section-tag">A solução PRV™️</p>
+      <h2 class="section-title">Quatro frentes.<br/>Um único objetivo:<br/><em>crescimento previsível.</em></h2>
+      <div class="servicos-grid">
+
+        <div class="servico-card servico-destaque">
+          <div class="servico-num">01</div>
+          <div class="servico-icon-wrap">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3>Diagnóstico Cirúrgico</h3>
+          <p>Identificamos exatamente onde sua empresa perde dinheiro e oportunidades. Sem filtro, sem suavizar.</p>
+          <ul class="servico-lista">
+            <li>Auditoria 360° da operação completa</li>
+            <li>Mapeamento de onde os leads morrem</li>
+            <li>Relatório honesto com plano de ação</li>
+          </ul>
+        </div>
+
+        <div class="servico-card">
+          <div class="servico-num">02</div>
+          <div class="servico-icon-wrap">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>Estruturação de Funil e Processos</h3>
+          <p>CRM, pipeline, scripts e follow-up padronizados — sem depender de sorte ou talento individual.</p>
+          <ul class="servico-lista">
+            <li>Funil mapeado do zero ao fechamento</li>
+            <li>CRM implantado e funcionando</li>
+            <li>Follow-up não é opção, é regra</li>
+          </ul>
+        </div>
+
+        <div class="servico-card">
+          <div class="servico-num">03</div>
+          <div class="servico-icon-wrap">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Implementação com seu Time</h3>
+          <p>Treinamento direto para transformar cada lead em cliente. Não mandamos um PDF e sumimos.</p>
+          <ul class="servico-lista">
+            <li>Treinamento com casos reais do negócio</li>
+            <li>Simulações com feedback preciso</li>
+            <li>Time executando do lado dos seus vendedores</li>
+          </ul>
+        </div>
+
+        <div class="servico-card servico-full">
+          <div class="servico-num">04</div>
+          <div class="servico-icon-wrap">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
+          <h3>Controle e Otimização Contínua — Crescimento que não depende de sorte</h3>
+          <p>Métricas reais, acompanhamento constante e ajustes estratégicos. Processo > opinião — decisões baseadas em dados, não achismo. O PRV™️ conecta processo, resultado e vendas, criando uma operação que cresce com controle.</p>
+          <ul class="servico-lista servico-lista-row">
+            <li>Tudo é medido e registrado</li>
+            <li>Decisões baseadas em dados reais</li>
+            <li>Acompanhamento semana a semana</li>
+            <li>Cultura forte que sustenta o crescimento</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESSO -->
+  <section class="processo" id="processo">
+    <div class="container">
+      <p class="section-tag">Como fazemos</p>
+      <h2 class="section-title">Sem enrolação.<br/><em>4 etapas</em> do diagnóstico<br/>ao resultado.</h2>
+      <div class="processo-steps">
+        <div class="pstep">
+          <div class="pstep-num">01</div>
+          <div class="pstep-line"></div>
+          <h4>Diagnóstico</h4>
+          <p>Identificamos exatamente onde sua operação perde dinheiro e oportunidades.</p>
+        </div>
+        <div class="pstep">
+          <div class="pstep-num">02</div>
+          <div class="pstep-line"></div>
+          <h4>Estruturação</h4>
+          <p>CRM, pipeline, scripts e follow-up padronizados. Crescimento sem depender de sorte.</p>
+        </div>
+        <div class="pstep">
+          <div class="pstep-num">03</div>
+          <div class="pstep-line"></div>
+          <h4>Implementação</h4>
+          <p>Treinamento direto com seu time para transformar cada lead em cliente.</p>
+        </div>
+        <div class="pstep">
+          <div class="pstep-num">04</div>
+          <div class="pstep-line last"></div>
+          <h4>Otimização</h4>
+          <p>Métricas reais, acompanhamento constante e ajustes estratégicos para escalar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="resultados" id="resultados">
+    <div class="container">
+      <p class="section-tag light">Prova de que funciona</p>
+      <h2 class="section-title light">Número não mente.<br/><em>Resultado real</em> de operações reais.</h2>
+      <div class="resultados-grid">
+        <div class="res-card">
+          <p class="res-num">+340%</p>
+          <p class="res-label">de retorno sobre investimento nos primeiros 90 dias</p>
+        </div>
+        <div class="res-card">
+          <p class="res-num">+68%</p>
+          <p class="res-label">de aumento na conversão de lead em cliente pagante</p>
+        </div>
+        <div class="res-card">
+          <p class="res-num">3x</p>
+          <p class="res-label">mais agendamentos após implementação do PRV™️ em 30 dias</p>
+        </div>
+        <div class="res-card">
+          <p class="res-num">-40%</p>
+          <p class="res-label">no custo de aquisição com estrutura comercial ativa</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="depoimentos">
+    <div class="container">
+      <p class="section-tag">Quem já escalou com o PRV™️</p>
+      <h2 class="section-title">Eles estavam<br/>exatamente onde<br/><em>você está agora.</em></h2>
+      <div class="dep-grid">
+        <div class="dep-card">
+          <div class="dep-aspas">"</div>
+          <p class="dep-texto">Em 30 dias dobramos leads qualificados. Não é mágica, é método. O PRV™️ deu estrutura para o que sempre foi improviso na nossa operação.</p>
+          <div class="dep-autor">
+            <div class="dep-avatar">MF</div>
+            <div>
+              <p class="dep-nome">Marcos Ferreira</p>
+              <p class="dep-cargo">Diretor Comercial</p>
+            </div>
+          </div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-aspas">"</div>
+          <p class="dep-texto">O PRV™️ nos deu controle total da operação e previsibilidade de faturamento. Finalmente saímos do modo improviso e entramos em escala real.</p>
+          <div class="dep-autor">
+            <div class="dep-avatar">AC</div>
+            <div>
+              <p class="dep-nome">Ana Carvalho</p>
+              <p class="dep-cargo">CEO</p>
+            </div>
+          </div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-aspas">"</div>
+          <p class="dep-texto">O treinamento mudou nossa cultura e aumentou as vendas no mesmo mês. ROI imediato. Estava pagando caro por lead e desperdiçando dentro de casa.</p>
+          <div class="dep-autor">
+            <div class="dep-avatar">RL</div>
+            <div>
+              <p class="dep-nome">Ricardo Lima</p>
+              <p class="dep-cargo">Sócio</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <p class="section-tag">Quebrando objeções</p>
+      <h2 class="section-title" style="text-align:center; margin-bottom: 48px;">Suas dúvidas,<br/><em>respondidas.</em></h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">Funciona para qualquer empresa? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">Empresas B2B e B2C que faturam a partir de 100k/mês e querem crescimento previsível. Se você tem operação para estruturar, o PRV™️ funciona.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">É só teoria? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">Não. Implementamos processos reais dentro da sua operação. Nossa equipe trabalha do lado do seu time — não mandamos um PDF e sumimos.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Preciso trocar meu time? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">Não. Estruturamos e treinamos sua equipe atual. O problema quase nunca é o time — é a falta de processo e cultura.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Quando vejo resultado? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">Assim que o método começa a ser aplicado. Clientes costumam ver os primeiros resultados nas primeiras 2 a 4 semanas de implementação.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Como vocês garantem resultado? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">Com processo estruturado, acompanhamento constante e foco total em execução. Tudo é medido e registrado — nada escapa do controle.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final" id="contato">
+    <div class="container">
+      <div class="cta-box">
+        <p class="section-tag light">Última chance</p>
+        <h2 class="cta-title">Pare de improvisar.<br/>Transforme sua operação<br/><em>em uma máquina de<br/>vendas previsível.</em></h2>
+        <p class="cta-sub">Ou continue deixando dinheiro na mesa. Fale agora com um especialista da True Growth e receba um diagnóstico gratuito e honesto da sua operação.</p>
+        <a href="https://wa.me/5574988010822" target="_blank" rel="noopener" class="btn-primary btn-large">
+          <span>👉 Quero escalar minha operação AGORA</span>
+        </a>
+        <p class="cta-disclaimer">Diagnóstico 100% gratuito. Sem compromisso. Só verdade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <img src="logo.png" alt="True Growth" class="logo-img" />
+      <p class="footer-copy">© 2025 True Growth. Todos os direitos reservados.</p>
+      <div class="footer-links">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // ── Partículas orbitando o ícone da hero ──
+    (function() {
+      const cx = 250, cy = 250, r = 210;
+      const pts = [
+        { cls: '.hp1', offset: 0 },
+        { cls: '.hp2', offset: 0.33 },
+        { cls: '.hp3', offset: 0.66 },
+      ];
+      let els = [], startTime = null;
+      function init() {
+        els = pts.map(p => ({ el: document.querySelector(p.cls), offset: p.offset }));
+        if (els[0].el) requestAnimationFrame(tick);
+      }
+      function tick(ts) {
+        if (!startTime) startTime = ts;
+        const elapsed = (ts - startTime) / 1000;
+        const period = 3;
+        els.forEach(p => {
+          const angle = ((elapsed / period) + p.offset) * 2 * Math.PI;
+          if (p.el) {
+            p.el.setAttribute('cx', (cx + r * Math.cos(angle)).toFixed(2));
+            p.el.setAttribute('cy', (cy + r * Math.sin(angle)).toFixed(2));
+          }
+        });
+        requestAnimationFrame(tick);
+      }
+      document.addEventListener('DOMContentLoaded', init);
+    })();
+
+    // ── Supabase Integration ──
+    const SUPABASE_URL = 'https://oyfitnieqjgujjtnhckt.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_vFnBuQ3XjrJxLGwHR_eLZA_e3S_D7KF';
+
+    async function enviarDiagnostico(dados) {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/diagnosticos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(dados)
+      });
+      if (!response.ok) {
+        const err = await response.text();
+        throw new Error(err);
+      }
+      return true;
+    }
+
+    document.getElementById('btn-submit').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-submit');
+      const errorEl = document.getElementById('form-error');
+      errorEl.classList.remove('show');
+
+      // Coletar dados
+      const nome = document.getElementById('nome').value.trim();
+      const nicho = document.getElementById('nicho').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const funcionarios = document.querySelector('input[name="funcionarios"]')?.value || null;
+      const comercial    = document.querySelector('input[name="comercial"]')?.value || null;
+      const faturamento  = document.querySelector('input[name="faturamento"]')?.value || null;
+      const dor          = document.querySelector('input[name="dor"]')?.value || null;
+
+      // Validação básica
+      if (!nome || !whatsapp) {
+        errorEl.textContent = 'Por favor, preencha nome e WhatsApp.';
+        errorEl.classList.add('show');
+        return;
+      }
+
+      btn.classList.add('loading');
+      btn.disabled = true;
+
+      try {
+        await enviarDiagnostico({ nome, nicho, whatsapp, funcionarios, comercial, faturamento, dor });
+        document.getElementById('form-fields').style.display = 'none';
+        document.getElementById('form-success').classList.add('show');
+      } catch (e) {
+        errorEl.textContent = 'Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp.';
+        errorEl.classList.add('show');
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    });
+
+    // ── Select Bar ──
+    document.querySelectorAll('.select-bar').forEach(bar => {
+      const trigger = bar.querySelector('.select-bar-trigger');
+      const label   = bar.querySelector('.select-bar-label');
+      const items   = bar.querySelectorAll('.select-bar-item');
+      const hidden  = bar.querySelector('input[type="hidden"]');
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = bar.classList.contains('open');
+        // close all
+        document.querySelectorAll('.select-bar.open').forEach(b => b.classList.remove('open'));
+        if (!isOpen) bar.classList.add('open');
+      });
+
+      items.forEach(item => {
+        item.addEventListener('click', () => {
+          items.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          label.textContent = item.dataset.value;
+          hidden.value = item.dataset.value;
+          bar.classList.remove('open');
+          bar.classList.add('selected');
+        });
+      });
+    });
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.select-bar.open').forEach(b => b.classList.remove('open'));
+    });
+
+    // ── FAQ Accordion ──
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
