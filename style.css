@@ -39,7 +39,7 @@
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--bg-base);
@@ -48,6 +48,7 @@ body {
   font-size: 16px;
   line-height: 1.65;
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* ── NOISE TEXTURE OVERLAY ── */
@@ -254,7 +255,7 @@ body::before {
 }
 
 .hero-bg-text {
-  position: fixed;
+  position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   font-family: var(--fonte-display);
@@ -838,7 +839,153 @@ body::before {
 }
 .footer-links a:hover { color: var(--verde); }
 
-/* ── FADE UP ON SCROLL ── */
+/* ── TICKER BAND ── */
+.ticker-band {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(45,255,170,0.04);
+  border-top: 1px solid rgba(45,255,170,0.18);
+  border-bottom: 1px solid rgba(45,255,170,0.18);
+  padding: 14px 0;
+  position: relative;
+  z-index: 2;
+}
+.ticker-band::before,
+.ticker-band::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 3;
+  pointer-events: none;
+}
+.ticker-band::before { left: 0; background: linear-gradient(90deg, var(--bg-base), transparent); }
+.ticker-band::after { right: 0; background: linear-gradient(-90deg, var(--bg-base), transparent); }
+.ticker-track {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: ticker-scroll 28s linear infinite;
+  width: max-content;
+}
+.ticker-band:hover .ticker-track { animation-play-state: paused; }
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--verde);
+  padding: 0 40px;
+}
+.ticker-dot {
+  font-size: 8px;
+  color: var(--verde-mid);
+  opacity: 0.7;
+}
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── PRV SECTION — two column ── */
+.secao-3d-prv {
+  grid-template-columns: 1fr 1fr !important;
+  max-width: var(--max) !important;
+  margin: 0 auto !important;
+  gap: 72px !important;
+}
+.prv-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.prv-pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.prv-pillar:last-child { border-bottom: none; }
+.prv-pillar:hover { background: var(--bg-card-alt); }
+.prv-pillar-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  background: rgba(45,255,170,0.06);
+  border: 1px solid rgba(45,255,170,0.14);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--verde);
+  flex-shrink: 0;
+}
+.prv-pillar-title {
+  font-family: var(--fonte-display);
+  font-size: 20px;
+  color: var(--txt);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+.prv-pillar-desc {
+  font-size: 13px;
+  color: var(--txt-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── SECTION DIVIDERS ── */
+.problema,
+.secao-3d,
+.servicos,
+.processo,
+.resultados,
+.depoimentos,
+.faq-section,
+.cta-final,
+.form-section {
+  border-top: 1px solid rgba(45,255,170,0.14);
+  position: relative;
+}
+.problema::after,
+.servicos::after,
+.depoimentos::after,
+.faq-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(45,255,170,0.14), transparent);
+}
+
+/* ── MOBILE OVERFLOW FIX ── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+.ticker-track { overflow: hidden; }
+
+@media (max-width: 960px) {
+  .secao-3d-prv {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .prv-pillars { max-width: 100%; }
+}
+
+/* ── RESPONSIVE: FORM ── */
+@media (max-width: 960px) {
+  .form-layout { grid-template-columns: 1fr !important; gap: 36px !important; }
+}
+@media (max-width: 600px) {
+  .form-box { padding: 22px 16px; }
+  .form-layout { padding: 0 16px; }
+}
 .fade-up {
   opacity: 0;
   transform: translateY(30px);
