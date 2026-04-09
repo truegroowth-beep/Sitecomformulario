@@ -9,7 +9,7 @@
   <style>
     /* ── FORMULÁRIO ── */
     .form-section {
-      padding: 110px 0;
+      padding: 90px 0;
       border-top: 1px solid var(--border);
       background: var(--bg-surface);
       position: relative;
@@ -17,15 +17,58 @@
     .form-section::before {
       content: '';
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; height: 500px;
+      top: 50%; right: 0;
+      transform: translateY(-50%);
+      width: 500px; height: 500px;
       background: radial-gradient(ellipse at center, rgba(45,255,170,0.05) 0%, transparent 70%);
       pointer-events: none;
     }
-    .form-wrap {
-      max-width: 640px;
+    /* Two-column layout for desktop */
+    .form-layout {
+      max-width: var(--max);
       margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .form-left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .form-left-title {
+      font-family: var(--fonte-display);
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--txt);
+      line-height: 1.04;
+      margin-bottom: 18px;
+    }
+    .form-left-title em { font-style: normal; color: var(--verde); }
+    .form-left-sub {
+      font-size: 15px;
+      color: var(--txt-muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .form-left-items {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .form-left-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--txt-mid);
+    }
+    .form-left-item svg { color: var(--verde); flex-shrink: 0; }
+    .form-wrap {
       position: relative;
       z-index: 1;
     }
@@ -33,30 +76,30 @@
       background: var(--bg-card);
       border: 1px solid var(--border-mid);
       border-radius: var(--radius-lg);
-      padding: 48px;
+      padding: 36px 32px;
     }
     .form-box .section-tag { margin-bottom: 12px; }
     .form-title {
       font-family: var(--fonte-display);
-      font-size: clamp(28px, 4vw, 42px);
+      font-size: clamp(24px, 3vw, 36px);
       color: var(--txt);
       line-height: 1.05;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .form-subtitle {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--txt-muted);
-      margin-bottom: 36px;
+      margin-bottom: 24px;
       line-height: 1.6;
     }
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-bottom: 20px;
+      gap: 6px;
+      margin-bottom: 14px;
     }
     .form-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -68,8 +111,8 @@
       border-radius: var(--radius-md);
       color: var(--txt);
       font-family: var(--fonte-corpo);
-      font-size: 15px;
-      padding: 14px 18px;
+      font-size: 14px;
+      padding: 11px 16px;
       width: 100%;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
@@ -82,7 +125,7 @@
     .radio-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .radio-option {
       display: flex;
@@ -91,7 +134,7 @@
       background: var(--bg-raised);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 12px 16px;
+      padding: 10px 14px;
       cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
     }
@@ -113,12 +156,12 @@
       border-color: var(--border-hot);
       background: rgba(45,255,170,0.04);
     }
-    .radio-option span { font-size: 14px; color: var(--txt-mid); }
+    .radio-option span { font-size: 13px; color: var(--txt-mid); }
     .form-submit {
       width: 100%;
-      margin-top: 12px;
-      height: 56px;
-      font-size: 16px;
+      margin-top: 10px;
+      height: 50px;
+      font-size: 15px;
       border-radius: var(--radius-md);
       cursor: pointer;
       border: none;
@@ -145,22 +188,22 @@
     .form-success {
       display: none;
       text-align: center;
-      padding: 48px 24px;
+      padding: 40px 24px;
     }
     .form-success.show { display: block; }
     .form-success-icon {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: 44px;
+      margin-bottom: 18px;
       display: block;
     }
     .form-success h3 {
       font-family: var(--fonte-display);
-      font-size: 32px;
+      font-size: 30px;
       color: var(--verde);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .form-success p {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--txt-muted);
       line-height: 1.7;
     }
@@ -170,8 +213,8 @@
       border-radius: var(--radius-md);
       color: #ff6b6b;
       font-size: 13px;
-      padding: 12px 16px;
-      margin-top: 12px;
+      padding: 10px 14px;
+      margin-top: 10px;
       display: none;
     }
     .form-error-msg.show { display: block; }
@@ -191,8 +234,8 @@
       border-radius: var(--radius-md);
       color: var(--txt-muted);
       font-family: var(--fonte-corpo);
-      font-size: 15px;
-      padding: 14px 18px;
+      font-size: 14px;
+      padding: 11px 16px;
       cursor: pointer;
       transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
       text-align: left;
@@ -351,7 +394,12 @@
     }
 
     @media (max-width: 600px) {
-      .form-box { padding: 28px 22px; }
+      .form-box { padding: 24px 18px; }
+      .form-layout { grid-template-columns: 1fr; gap: 32px; }
+      .form-left-col { gap: 0; }
+    }
+    @media (max-width: 960px) {
+      .form-layout { grid-template-columns: 1fr; gap: 36px; }
     }
   </style>
 </head>
@@ -394,16 +442,8 @@
           <span>Quero escalar minha operação AGORA</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="https://wa.me/5574988010822" target="_blank" rel="noopener" class="btn-ghost">
-          <span>Ver como funciona</span>
-        </a>
       </div>
       <div class="hero-stats">
-        <div class="stat">
-          <span class="stat-num">+340%</span>
-          <span class="stat-label">ROI médio em tráfego</span>
-        </div>
-        <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num">+120</span>
           <span class="stat-label">Operações escaladas</span>
@@ -438,110 +478,144 @@
     </div>
   </section>
 
-  <!-- FORMULÁRIO DIAGNÓSTICO -->
+  <!-- FAIXA ANIMADA -->
+  <div class="ticker-band" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Diagnóstico gratuito e sem compromisso</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> +120 operações escaladas com o PRV™️</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Processo → Resultado → Vendas</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Crescimento previsível não é sorte</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Seu time executando com método real</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Faturamento 100k+/mês? Fale com a gente</span>
+      <!-- Duplicated for seamless loop -->
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Diagnóstico gratuito e sem compromisso</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> +120 operações escaladas com o PRV™️</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Processo → Resultado → Vendas</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Crescimento previsível não é sorte</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Seu time executando com método real</span>
+      <span class="ticker-item"><span class="ticker-dot">◆</span> Faturamento 100k+/mês? Fale com a gente</span>
+    </div>
+  </div>
   <section class="form-section" id="diagnostico">
-    <div class="form-wrap">
-      <div class="form-box">
-        <p class="section-tag">Diagnóstico rápido</p>
-        <h2 class="form-title">Descubra se sua empresa está pronta para escalar com o PRV™️</h2>
-        <p class="form-subtitle">Leva 1 minuto. Responda abaixo e receba sua análise gratuita.</p>
-
-        <div id="form-fields">
-          <div class="form-group">
-            <label class="form-label" for="nome">Nome completo</label>
-            <input class="form-input" type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name"/>
+    <div class="form-layout">
+      <div class="form-left-col">
+        <p class="section-tag">Diagnóstico gratuito</p>
+        <h2 class="form-left-title">Descubra se sua empresa está pronta para <em>escalar com o PRV™️</em></h2>
+        <p class="form-left-sub">Leva 1 minuto. Responda ao lado e nossa equipe entra em contato com uma análise honesta da sua operação.</p>
+        <div class="form-left-items">
+          <div class="form-left-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Diagnóstico 100% gratuito</span>
           </div>
-
-          <div class="form-group">
-            <label class="form-label" for="nicho">Qual o nicho da sua empresa?</label>
-            <input class="form-input" type="text" id="nicho" name="nicho" placeholder="Ex: clínica, imóveis, SaaS..."/>
+          <div class="form-left-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Sem compromisso</span>
           </div>
-
-          <div class="form-group">
-            <label class="form-label" for="whatsapp">WhatsApp</label>
-            <input class="form-input" type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" autocomplete="tel"/>
+          <div class="form-left-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Resposta em até 24h no WhatsApp</span>
           </div>
-
-          <div class="form-group">
-            <label class="form-label">Quantos funcionários sua empresa possui?</label>
-            <div class="select-bar" data-name="funcionarios">
-              <button type="button" class="select-bar-trigger">
-                <span class="select-bar-label">Selecione uma opção</span>
-                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-              </button>
-              <div class="select-bar-options">
-                <button type="button" class="select-bar-item" data-value="1 a 3">1 a 3</button>
-                <button type="button" class="select-bar-item" data-value="4 a 10">4 a 10</button>
-                <button type="button" class="select-bar-item" data-value="11 a 30">11 a 30</button>
-                <button type="button" class="select-bar-item" data-value="30+">30+</button>
-              </div>
-              <input type="hidden" name="funcionarios" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Hoje, como funciona seu comercial?</label>
-            <div class="select-bar" data-name="comercial">
-              <button type="button" class="select-bar-trigger">
-                <span class="select-bar-label">Selecione uma opção</span>
-                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-              </button>
-              <div class="select-bar-options">
-                <button type="button" class="select-bar-item" data-value="Não tenho time comercial">Não tenho time comercial</button>
-                <button type="button" class="select-bar-item" data-value="1 atendente">1 atendente</button>
-                <button type="button" class="select-bar-item" data-value="Time com até 4 pessoas">Time com até 4 pessoas</button>
-                <button type="button" class="select-bar-item" data-value="Time com 10 ou mais">Time com 10 ou mais</button>
-              </div>
-              <input type="hidden" name="comercial" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Qual seu faturamento mensal atual?</label>
-            <div class="select-bar" data-name="faturamento">
-              <button type="button" class="select-bar-trigger">
-                <span class="select-bar-label">Selecione uma opção</span>
-                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-              </button>
-              <div class="select-bar-options">
-                <button type="button" class="select-bar-item" data-value="50 mil a 100 mil">50 mil a 100 mil</button>
-                <button type="button" class="select-bar-item" data-value="100 mil a 500 mil">100 mil a 500 mil</button>
-                <button type="button" class="select-bar-item" data-value="500 mil a 1 milhão">500 mil a 1 milhão</button>
-                <button type="button" class="select-bar-item" data-value="1 milhão+">1 milhão+</button>
-              </div>
-              <input type="hidden" name="faturamento" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Onde você sente que mais perde dinheiro hoje?</label>
-            <div class="select-bar" data-name="dor">
-              <button type="button" class="select-bar-trigger">
-                <span class="select-bar-label">Selecione uma opção</span>
-                <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-              </button>
-              <div class="select-bar-options">
-                <button type="button" class="select-bar-item" data-value="Falta de processo">Falta de processo</button>
-                <button type="button" class="select-bar-item" data-value="Falta de follow-up">Falta de follow-up</button>
-                <button type="button" class="select-bar-item" data-value="Leads desqualificados">Leads desqualificados</button>
-                <button type="button" class="select-bar-item" data-value="Baixa conversão">Baixa conversão</button>
-                <button type="button" class="select-bar-item" data-value="Não sei exatamente">Não sei exatamente</button>
-              </div>
-              <input type="hidden" name="dor" />
-            </div>
-          </div>
-
-          <button class="form-submit btn-primary" id="btn-submit" type="button">
-            <span class="spinner"></span>
-            <span class="btn-label">👉 Quero meu diagnóstico agora</span>
-          </button>
-          <div class="form-error-msg" id="form-error"></div>
         </div>
+      </div>
+      <div class="form-wrap">
+        <div class="form-box">
+          <div id="form-fields">
+            <div class="form-group">
+              <label class="form-label" for="nome">Nome completo</label>
+              <input class="form-input" type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name"/>
+            </div>
 
-        <div class="form-success" id="form-success">
-          <span class="form-success-icon">✅</span>
-          <h3>Diagnóstico enviado!</h3>
-          <p>Recebemos suas respostas. Nossa equipe vai analisar sua operação e entrar em contato pelo WhatsApp em breve.</p>
+            <div class="form-group">
+              <label class="form-label" for="nicho">Qual o nicho da sua empresa?</label>
+              <input class="form-input" type="text" id="nicho" name="nicho" placeholder="Ex: clínica, imóveis, SaaS..."/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="whatsapp">WhatsApp</label>
+              <input class="form-input" type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" autocomplete="tel"/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Quantos funcionários sua empresa possui?</label>
+              <div class="select-bar" data-name="funcionarios">
+                <button type="button" class="select-bar-trigger">
+                  <span class="select-bar-label">Selecione uma opção</span>
+                  <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="select-bar-options">
+                  <button type="button" class="select-bar-item" data-value="1 a 3">1 a 3</button>
+                  <button type="button" class="select-bar-item" data-value="4 a 10">4 a 10</button>
+                  <button type="button" class="select-bar-item" data-value="11 a 30">11 a 30</button>
+                  <button type="button" class="select-bar-item" data-value="30+">30+</button>
+                </div>
+                <input type="hidden" name="funcionarios" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Hoje, como funciona seu comercial?</label>
+              <div class="select-bar" data-name="comercial">
+                <button type="button" class="select-bar-trigger">
+                  <span class="select-bar-label">Selecione uma opção</span>
+                  <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="select-bar-options">
+                  <button type="button" class="select-bar-item" data-value="Não tenho time comercial">Não tenho time comercial</button>
+                  <button type="button" class="select-bar-item" data-value="1 atendente">1 atendente</button>
+                  <button type="button" class="select-bar-item" data-value="Time com até 4 pessoas">Time com até 4 pessoas</button>
+                  <button type="button" class="select-bar-item" data-value="Time com 10 ou mais">Time com 10 ou mais</button>
+                </div>
+                <input type="hidden" name="comercial" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Qual seu faturamento mensal atual?</label>
+              <div class="select-bar" data-name="faturamento">
+                <button type="button" class="select-bar-trigger">
+                  <span class="select-bar-label">Selecione uma opção</span>
+                  <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="select-bar-options">
+                  <button type="button" class="select-bar-item" data-value="50 mil a 100 mil">50 mil a 100 mil</button>
+                  <button type="button" class="select-bar-item" data-value="100 mil a 500 mil">100 mil a 500 mil</button>
+                  <button type="button" class="select-bar-item" data-value="500 mil a 1 milhão">500 mil a 1 milhão</button>
+                  <button type="button" class="select-bar-item" data-value="1 milhão+">1 milhão+</button>
+                </div>
+                <input type="hidden" name="faturamento" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Onde você sente que mais perde dinheiro hoje?</label>
+              <div class="select-bar" data-name="dor">
+                <button type="button" class="select-bar-trigger">
+                  <span class="select-bar-label">Selecione uma opção</span>
+                  <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="select-bar-options">
+                  <button type="button" class="select-bar-item" data-value="Falta de processo">Falta de processo</button>
+                  <button type="button" class="select-bar-item" data-value="Falta de follow-up">Falta de follow-up</button>
+                  <button type="button" class="select-bar-item" data-value="Leads desqualificados">Leads desqualificados</button>
+                  <button type="button" class="select-bar-item" data-value="Baixa conversão">Baixa conversão</button>
+                  <button type="button" class="select-bar-item" data-value="Não sei exatamente">Não sei exatamente</button>
+                </div>
+                <input type="hidden" name="dor" />
+              </div>
+            </div>
+
+            <button class="form-submit btn-primary" id="btn-submit" type="button">
+              <span class="spinner"></span>
+              <span class="btn-label">👉 Quero meu diagnóstico agora</span>
+            </button>
+            <div class="form-error-msg" id="form-error"></div>
+          </div>
+
+          <div class="form-success" id="form-success">
+            <span class="form-success-icon">✅</span>
+            <h3>Diagnóstico enviado!</h3>
+            <p>Recebemos suas respostas. Nossa equipe vai analisar sua operação e entrar em contato pelo WhatsApp em breve.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -587,21 +661,53 @@
 
   <!-- SEÇÃO 3D -->
   <section class="secao-3d">
-    <div class="secao-3d-inner secao-3d-inner--textonly">
+    <div class="secao-3d-inner secao-3d-prv">
       <div class="secao-3d-texto">
         <p class="section-tag">O que é PRV™️</p>
         <h2 class="section-title">Processo, Resultado<br/>e <em>Vendas</em> —<br/>sem improviso.</h2>
         <p class="secao-3d-desc">O PRV™️ é o método da True Growth que transforma operações comuns em máquinas de vendas previsíveis, escaláveis e replicáveis. <strong>Tudo é medido e registrado</strong> — nada escapa do controle.</p>
-        <div class="secao-3d-pills">
-          <span class="pill">Processo</span>
-          <span class="pill">Resultado</span>
-          <span class="pill">Vendas</span>
-          <span class="pill">Cultura forte</span>
-        </div>
         <a href="https://wa.me/5574988010822" target="_blank" rel="noopener" class="btn-primary">
           <span>Quero esse resultado</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
+      </div>
+      <div class="prv-pillars">
+        <div class="prv-pillar">
+          <div class="prv-pillar-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+          </div>
+          <div>
+            <p class="prv-pillar-title">Processo</p>
+            <p class="prv-pillar-desc">CRM, funil e scripts estruturados — nada improvisa, tudo funciona.</p>
+          </div>
+        </div>
+        <div class="prv-pillar">
+          <div class="prv-pillar-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
+          <div>
+            <p class="prv-pillar-title">Resultado</p>
+            <p class="prv-pillar-desc">Métricas reais medidas semana a semana. Decisão por dado, não achismo.</p>
+          </div>
+        </div>
+        <div class="prv-pillar">
+          <div class="prv-pillar-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div>
+            <p class="prv-pillar-title">Vendas</p>
+            <p class="prv-pillar-desc">Pipeline ativo, follow-up que acontece e conversão que não depende de sorte.</p>
+          </div>
+        </div>
+        <div class="prv-pillar">
+          <div class="prv-pillar-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <p class="prv-pillar-title">Cultura Forte</p>
+            <p class="prv-pillar-desc">Time alinhado, treinado e comprometido com o crescimento da operação.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -826,7 +932,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <img src="logo.png" alt="True Growth" class="logo-img" />
-      <p class="footer-copy">© 2025 True Growth. Todos os direitos reservados.</p>
+      <p class="footer-copy">© 2026 True Growth. Todos os direitos reservados.</p>
       <div class="footer-links">
         <a href="#">Política de Privacidade</a>
         <a href="#">Termos de Uso</a>
