@@ -536,40 +536,6 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">Quantos funcionários sua empresa possui?</label>
-              <div class="select-bar" data-name="funcionarios">
-                <button type="button" class="select-bar-trigger">
-                  <span class="select-bar-label">Selecione uma opção</span>
-                  <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <div class="select-bar-options">
-                  <button type="button" class="select-bar-item" data-value="1 a 3">1 a 3</button>
-                  <button type="button" class="select-bar-item" data-value="4 a 10">4 a 10</button>
-                  <button type="button" class="select-bar-item" data-value="11 a 30">11 a 30</button>
-                  <button type="button" class="select-bar-item" data-value="30+">30+</button>
-                </div>
-                <input type="hidden" name="funcionarios" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Hoje, como funciona seu comercial?</label>
-              <div class="select-bar" data-name="comercial">
-                <button type="button" class="select-bar-trigger">
-                  <span class="select-bar-label">Selecione uma opção</span>
-                  <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <div class="select-bar-options">
-                  <button type="button" class="select-bar-item" data-value="Não tenho time comercial">Não tenho time comercial</button>
-                  <button type="button" class="select-bar-item" data-value="1 atendente">1 atendente</button>
-                  <button type="button" class="select-bar-item" data-value="Time com até 4 pessoas">Time com até 4 pessoas</button>
-                  <button type="button" class="select-bar-item" data-value="Time com 10 ou mais">Time com 10 ou mais</button>
-                </div>
-                <input type="hidden" name="comercial" />
-              </div>
-            </div>
-
-            <div class="form-group">
               <label class="form-label">Qual seu faturamento mensal atual?</label>
               <div class="select-bar" data-name="faturamento">
                 <button type="button" class="select-bar-trigger">
@@ -583,24 +549,6 @@
                   <button type="button" class="select-bar-item" data-value="1 milhão+">1 milhão+</button>
                 </div>
                 <input type="hidden" name="faturamento" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Onde você sente que mais perde dinheiro hoje?</label>
-              <div class="select-bar" data-name="dor">
-                <button type="button" class="select-bar-trigger">
-                  <span class="select-bar-label">Selecione uma opção</span>
-                  <svg class="select-bar-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <div class="select-bar-options">
-                  <button type="button" class="select-bar-item" data-value="Falta de processo">Falta de processo</button>
-                  <button type="button" class="select-bar-item" data-value="Falta de follow-up">Falta de follow-up</button>
-                  <button type="button" class="select-bar-item" data-value="Leads desqualificados">Leads desqualificados</button>
-                  <button type="button" class="select-bar-item" data-value="Baixa conversão">Baixa conversão</button>
-                  <button type="button" class="select-bar-item" data-value="Não sei exatamente">Não sei exatamente</button>
-                </div>
-                <input type="hidden" name="dor" />
               </div>
             </div>
 
@@ -1002,10 +950,7 @@
       const nome = document.getElementById('nome').value.trim();
       const nicho = document.getElementById('nicho').value.trim();
       const whatsapp = document.getElementById('whatsapp').value.trim();
-      const funcionarios = document.querySelector('input[name="funcionarios"]')?.value || null;
-      const comercial    = document.querySelector('input[name="comercial"]')?.value || null;
       const faturamento  = document.querySelector('input[name="faturamento"]')?.value || null;
-      const dor          = document.querySelector('input[name="dor"]')?.value || null;
 
       // Validação básica
       if (!nome || !whatsapp) {
@@ -1018,7 +963,7 @@
       btn.disabled = true;
 
       try {
-        await enviarDiagnostico({ nome, nicho, whatsapp, funcionarios, comercial, faturamento, dor });
+        await enviarDiagnostico({ nome, nicho, whatsapp, faturamento });
         document.getElementById('form-fields').style.display = 'none';
         document.getElementById('form-success').classList.add('show');
       } catch (e) {
